@@ -1,0 +1,2 @@
+controls_switch, controls_switch_case, controls_switch_default
+ardioblockly/msg/en.js  => /* Toolbox Categories*/ catProcedure

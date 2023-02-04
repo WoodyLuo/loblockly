@@ -1176,6 +1176,21 @@ Blockly.Blocks.controls_whileUntil = {
     });
   },
 };
+Blockly.Blocks.controls_while_until_time = {
+  init: function () {
+    this.appendValueInput("LOOP_SEC")
+      .setCheck(Blockly.Types.NUMBER.output)
+      .appendField(Blockly.Msg.CONTROLS_WHILE_UNTIL_TIME);
+    this.appendDummyInput().appendField(Blockly.Msg.CONTROLS_WHILE_UNTIL_TIME_SEC);
+    this.appendStatementInput("DO");
+    this.setInputsInline(!0);
+    this.setPreviousStatement(!0, null);
+    this.setNextStatement(!0, null);
+    this.setColour(Blockly.Blocks.loops.HUE);
+    this.setTooltip("");
+    this.setHelpUrl("");
+  },
+};
 Blockly.Blocks.controls_for = {
   init: function () {
     this.jsonInit({
@@ -1542,7 +1557,7 @@ Blockly.Blocks.math_number_property = {
     return Blockly.Types.BOOLEAN;
   },
 };
-Blockly.Blocks.math_change = {
+Blockly.Blocks.math_basic_map = {
   init: function () {
     this.jsonInit({
       message0: Blockly.Msg.MATH_CHANGE_TITLE,
@@ -1573,6 +1588,35 @@ Blockly.Blocks.math_change = {
     });
   },
   getVarType: function (a) {
+    return Blockly.Types.NUMBER;
+  },
+};
+Blockly.Blocks.math_any_map = {
+  init: function () {
+    this.setHelpUrl("https://arduino.cc/en/Reference/map");
+    this.setColour(Blockly.Blocks.math.HUE);
+    this.appendValueInput("NUM")
+      .appendField(Blockly.Msg.ARD_MAP)
+      .setCheck(Blockly.Types.NUMBER.checkList);
+    this.appendValueInput("SMIN")
+      .appendField("[")
+      .setCheck(Blockly.Types.NUMBER.checkList);
+    this.appendValueInput("SMAX")
+      .appendField(" - ")
+      .setCheck(Blockly.Types.NUMBER.checkList);
+    this.appendDummyInput().appendField("]");
+    this.appendValueInput("DMIN")
+      .appendField(" \u2192 [")
+      .setCheck(Blockly.Types.NUMBER.checkList);
+    this.appendValueInput("DMAX")
+      .appendField(" - ")
+      .setCheck(Blockly.Types.NUMBER.checkList);
+    this.appendDummyInput().appendField("]");
+    this.setInputsInline(!0);
+    this.setOutput(!0);
+    this.setTooltip(Blockly.Msg.ARD_MAP_X_TIP);
+  },
+  getBlockType: function () {
     return Blockly.Types.NUMBER;
   },
 };
@@ -2707,6 +2751,85 @@ Blockly.Blocks.text_prompt = {
 // Variables
 Blockly.Blocks.variables = {};
 Blockly.Blocks.variables.HUE = 330;
+Blockly.Blocks.variables_init = {
+  init: function () {
+    this.jsonInit({
+      message0: Blockly.Msg.VARIABLES_INIT,
+      args0: [
+        {
+          type: "field_variable",
+          name: "VAR",
+          variable: Blockly.Msg.VARIABLES_DEFAULT_NAME,
+        },
+        { type: "input_value", name: "VALUE" },
+        { type: "field_checkbox", name: "CONST", checked: !1 },
+      ],
+      colour: Blockly.Blocks.variables.HUE,
+      tooltip: Blockly.Msg.VARIABLES_INIT_TOOLTIP,
+      helpUrl: Blockly.Msg.VARIABLES_SET_HELPURL,
+    });
+  },
+  getVarType: function (a) {
+    return Blockly.Types.getChildBlockType(this);
+  },
+};
+Blockly.Blocks.variables_declare_globally = {
+  init: function () {
+    this.jsonInit({
+      message0: Blockly.Msg.VARIABLES_DECLARE_GLOBALLY,
+      args0: [
+        {
+          type: "field_variable",
+          name: "VAR",
+          variable: Blockly.Msg.VARIABLES_DEFAULT_NAME,
+        },
+        {
+          type: "field_dropdown",
+          name: "VARIABLE_TYPE",
+          options: Blockly.Types.getValidTypeArray(),
+        },
+        { type: "field_checkbox", name: "CONST", checked: !1 },
+      ],
+      inputsInline: !0,
+      colour: Blockly.Blocks.variables.HUE,
+      tooltip: Blockly.Msg.VARIABLES_DECLARE_GLOBALLY_TOOLTIP,
+      helpUrl: Blockly.Msg.VARIABLES_SET_HELPURL,
+    });
+  },
+  getVarType: function () {
+    var a = this.getFieldValue("VARIABLE_TYPE");
+    return Blockly.Types[a];
+  },
+};
+Blockly.Blocks.variables_declare_locally = {
+  init: function () {
+    this.jsonInit({
+      message0: Blockly.Msg.VARIABLES_DECLARE_LOCALLY,
+      args0: [
+        {
+          type: "field_variable",
+          name: "VAR",
+          variable: Blockly.Msg.VARIABLES_DEFAULT_NAME,
+        },
+        {
+          type: "field_dropdown",
+          name: "VARIABLE_TYPE",
+          options: Blockly.Types.getValidTypeArray(),
+        },
+      ],
+      previousStatement: null,
+      nextStatement: null,
+      inputsInline: !0,
+      colour: Blockly.Blocks.variables.HUE,
+      tooltip: Blockly.Msg.VARIABLES_DECLARE_LOCALLY_TOOLTIP,
+      helpUrl: Blockly.Msg.VARIABLES_SET_HELPURL,
+    });
+  },
+  getVarType: function () {
+    var a = this.getFieldValue("VARIABLE_TYPE");
+    return Blockly.Types[a];
+  },
+};
 Blockly.Blocks.variables_get = {
   init: function () {
     this.setHelpUrl(Blockly.Msg.VARIABLES_GET_HELPURL);

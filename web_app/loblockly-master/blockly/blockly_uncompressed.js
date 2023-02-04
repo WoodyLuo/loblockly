@@ -22855,6 +22855,11 @@ Blockly.Types.BOOLEAN = new Blockly.Type({
   typeMsgName: "ARD_TYPE_BOOL",
   compatibleTypes: [],
 });
+Blockly.Types.UNSIGNED_SHORT_NUMBER = new Blockly.Type({
+  typeId: "Unsigned Short Number",
+  typeMsgName: "ARD_TYPE_UNSUGNED_SHORT",
+  compatibleTypes: [],
+});
 Blockly.Types.SHORT_NUMBER = new Blockly.Type({
   typeId: "Short Number",
   typeMsgName: "ARD_TYPE_SHORT",
@@ -22863,6 +22868,11 @@ Blockly.Types.SHORT_NUMBER = new Blockly.Type({
 Blockly.Types.NUMBER = new Blockly.Type({
   typeId: "Number",
   typeMsgName: "ARD_TYPE_NUMBER",
+  compatibleTypes: [],
+});
+Blockly.Types.UNSIGNED_LARGE_NUMBER = new Blockly.Type({
+  typeId: "Unsigned Large Number",
+  typeMsgName: "ARD_TYPE_UNSUGNED_LARGE",
   compatibleTypes: [],
 });
 Blockly.Types.LARGE_NUMBER = new Blockly.Type({
@@ -22989,7 +22999,8 @@ Blockly.StaticTyping.prototype.collectVarsWithTypes = function (a) {
               ? this.pendingVarTypeDict[f[1]].push(e)
               : (this.pendingVarTypeDict[f[1]] = [e]),
             (f = Blockly.Types.UNDEF)));
-      this.assignTypeToVars(a[b], e, f);
+      // 如果需要自動宣告變數的類型，就需要此行程式
+      //this.assignTypeToVars(a[b], e, f);
     }
   return this.varTypeDict;
 };
@@ -23030,6 +23041,8 @@ Blockly.StaticTyping.getBlockVars = function (a) {
     }
   return b;
 };
+// Blockly.StaticTyping.prototype.assignTypeToVars
+// 這個函式會自動宣告全域變數的類型
 Blockly.StaticTyping.prototype.assignTypeToVars = function (a, b, c) {
   switch (this.varTypeDict[b]) {
     case void 0:

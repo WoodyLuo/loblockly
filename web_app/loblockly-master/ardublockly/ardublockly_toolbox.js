@@ -35,6 +35,13 @@ Ardublockly.TOOLBOX_XML =
 '      </value>' +
 '    </block>' +
 '    <block type="controls_whileUntil"></block>' +
+'    <block type="controls_while_until_time">' +
+'       <value name="LOOP_SEC">' +
+'         <block type="math_number">' +
+'           <field name="NUM">10</field>' +
+'         </block>' +
+'      </value>' +
+'    </block>' +
 '    <block type="controls_for">' +
 '      <value name="FROM">' +
 '        <block type="math_number">' +
@@ -62,7 +69,7 @@ Ardublockly.TOOLBOX_XML =
 '    <block type="math_trig"></block>' +
 '    <block type="math_constant"></block>' +
 '    <block type="math_number_property"></block>' +
-'    <block type="math_change">' +
+'    <block type="math_basic_map">' +
 '      <value name="DELTA">' +
 '        <block type="math_number">' +
 '          <field name="NUM">1</field>' +
@@ -71,6 +78,8 @@ Ardublockly.TOOLBOX_XML =
 '    </block>' +
 '    <block type="math_round"></block>' +
 '    <block type="math_modulo"></block>' +
+'    <block type="base_map"></block>' +
+'    <block type="math_any_map"></block>' +
 '    <block type="math_constrain">' +
 '      <value name="LOW">' +
 '        <block type="math_number">' +
@@ -96,7 +105,6 @@ Ardublockly.TOOLBOX_XML =
 '      </value>' +
 '    </block>' +
 '    <block type="math_random_float"></block>' +
-'    <block type="base_map"></block>' +
 '  </category>' +
 '  <sep></sep>' +
 '  <category id="catText" name="Text">' +
@@ -114,6 +122,8 @@ Ardublockly.TOOLBOX_XML =
 '  </category>' +
 '  <sep></sep>' +
 '  <category id="catVariables" name="Variables">' +
+'    <block type="variables_declare_globally"></block>' +
+'    <block type="variables_declare_locally"></block>' +
 '    <block type="variables_get"></block>' +
 '    <block type="variables_set"></block>' +
 '    <block type="variables_set">' +

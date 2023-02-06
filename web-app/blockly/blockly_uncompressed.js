@@ -23000,7 +23000,7 @@ Blockly.StaticTyping.prototype.collectVarsWithTypes = function (a) {
               : (this.pendingVarTypeDict[f[1]] = [e]),
             (f = Blockly.Types.UNDEF)));
       // 如果需要自動宣告變數的類型，就需要此行程式
-      //this.assignTypeToVars(a[b], e, f);
+      // this.assignTypeToVars(a[b], e, f);
     }
   return this.varTypeDict;
 };

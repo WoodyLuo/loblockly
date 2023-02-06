@@ -1833,13 +1833,22 @@ Blockly.Arduino.variables_init = function (a) {
   Blockly.Arduino.addVariable(c, a + e + " " + d + " = " + b + ";", !0);
   return "";
 };
-Blockly.Arduino.variables_declare = function (a) {
+Blockly.Arduino.variables_declare_globally = function (a) {
   var b = a.getFieldValue("VAR"),
     c = Blockly.Arduino.variableDB_.getName(b, Blockly.Variables.NAME_TYPE),
     d = Blockly.Arduino.getArduinoType_(a.getVarType());
   a = "TRUE" === a.getFieldValue("CONST") ? "const " : "";
   Blockly.Arduino.addVariable(b, a + d + " " + c + ";", !0);
   return "";
+};
+
+Blockly.Arduino.variables_declare_locally = function (a) {
+  var b = a.getFieldValue("VAR"),
+    c = Blockly.Arduino.variableDB_.getName(b, Blockly.Variables.NAME_TYPE),
+    d = Blockly.Arduino.getArduinoType_(a.getVarType());
+  a = "TRUE" === a.getFieldValue("CONST") ? "const " : "";
+  //Blockly.Arduino.addVariable(b, a + d + " " + c + ";", !0);
+  return b + " " + d + " " +  c + ";\n";
 };
 /*
 Blockly.Arduino.variables_set = function (a) {

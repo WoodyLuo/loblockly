@@ -1837,8 +1837,18 @@ Blockly.Arduino.variables_declare_globally = function (a) {
   var b = a.getFieldValue("VAR"),
     c = Blockly.Arduino.variableDB_.getName(b, Blockly.Variables.NAME_TYPE),
     d = Blockly.Arduino.getArduinoType_(a.getVarType());
-  a = "TRUE" === a.getFieldValue("CONST") ? "const " : "";
-  Blockly.Arduino.addVariable(b, a + d + " " + c + ";", !0);
+  if("TRUE" === a.getFieldValue("ADDITIONAL")){
+    if( "const" === a.getFieldValue("ADDITIONAL_TYPE") ){
+      a = "const ";
+      Blockly.Arduino.addVariable(b, a + d + " " + c + ";", !0);
+    }else if( "pointer" === a.getFieldValue("ADDITIONAL_TYPE") ){
+      a = " * ";
+      Blockly.Arduino.addVariable(b, d + a + c + ";", !0);
+    }
+  }else{
+    a = "";
+    Blockly.Arduino.addVariable(b, a + d + " " + c + ";", !0);
+  }
   return "";
 };
 
@@ -1846,9 +1856,19 @@ Blockly.Arduino.variables_declare_locally = function (a) {
   var b = a.getFieldValue("VAR"),
     c = Blockly.Arduino.variableDB_.getName(b, Blockly.Variables.NAME_TYPE),
     d = Blockly.Arduino.getArduinoType_(a.getVarType());
-  a = "TRUE" === a.getFieldValue("CONST") ? "const " : "";
+  if("TRUE" === a.getFieldValue("ADDITIONAL")){
+    if( "const" === a.getFieldValue("ADDITIONAL_TYPE") ){
+      a = "const";
+      return a + " " + d + " " +  c + ";\n";
+    }else if( "pointer" === a.getFieldValue("ADDITIONAL_TYPE") ){
+      a = "*";
+      return d + " " + a + " " +  c + ";\n";
+    }
+  }else{
+    return d + " " +  c + ";\n";
+  }
   //Blockly.Arduino.addVariable(b, a + d + " " + c + ";", !0);
-  return b + " " + d + " " +  c + ";\n";
+  
 };
 /*
 Blockly.Arduino.variables_set = function (a) {

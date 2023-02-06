@@ -2788,7 +2788,19 @@ Blockly.Blocks.variables_declare_globally = {
           name: "VARIABLE_TYPE",
           options: Blockly.Types.getValidTypeArray(),
         },
-        { type: "field_checkbox", name: "CONST", checked: !1 },
+        { type: "field_checkbox", name: "ADDITIONAL", checked: !1 },
+        {
+          "type": "field_dropdown",
+          "name": "ADDITIONAL_TYPE",
+          "options": [
+            [
+              "const", "const"
+            ],
+            [
+              "pointer", "pointer"
+            ],
+          ]
+        },
       ],
       inputsInline: !0,
       colour: Blockly.Blocks.variables.HUE,
@@ -2815,6 +2827,19 @@ Blockly.Blocks.variables_declare_locally = {
           type: "field_dropdown",
           name: "VARIABLE_TYPE",
           options: Blockly.Types.getValidTypeArray(),
+        },
+        { type: "field_checkbox", name: "ADDITIONAL", checked: !1 },
+        {
+          "type": "field_dropdown",
+          "name": "ADDITIONAL_TYPE",
+          "options": [
+            [
+              "const", "const"
+            ],
+            [
+              "pointer", "pointer"
+            ],
+          ]
         },
       ],
       previousStatement: null,

@@ -122,7 +122,9 @@ Ardublockly.TOOLBOX_XML =
 '  </category>' +
 '  <sep></sep>' +
 '  <category id="catVariables" name="Variables">' +
+'    <block type="variables_init_globally"></block>' +
 '    <block type="variables_declare_globally"></block>' +
+'    <block type="variables_init_locally"></block>' +
 '    <block type="variables_declare_locally"></block>' +
 '    <block type="variables_get"></block>' +
 '    <block type="variables_set"></block>' +

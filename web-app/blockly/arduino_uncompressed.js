@@ -1822,18 +1822,49 @@ Blockly.Arduino.io_notone = function (a) {
   return "noTone(" + b + ");\n";
 };
 Blockly.Arduino.variables = {};
-Blockly.Arduino.variables_init = function (a) {
-  var b =
-      Blockly.Arduino.valueToCode(a, "VALUE", Blockly.Arduino.ORDER_ATOMIC) ||
-      "0",
-    c = a.getFieldValue("VAR"),
-    d = Blockly.Arduino.variableDB_.getName(c, Blockly.Variables.NAME_TYPE),
-    e = Blockly.Arduino.getArduinoType_(a.getVarType());
-  a = "TRUE" === a.getFieldValue("CONST") ? "const " : "";
-  Blockly.Arduino.addVariable(c, a + e + " " + d + " = " + b + ";", !0);
+Blockly.Arduino.variables_init_globally = function (a) {
+  var b = a.getFieldValue("VAR"),
+      c = Blockly.Arduino.variableDB_.getName(b, Blockly.Variables.NAME_TYPE),
+      // d = Blockly.Arduino.getArduinoType_(a.getVarType()),   // <-- This is an auto type function.
+      d = Blockly.Arduino.getArduinoType_( Blockly.Types[a.getFieldValue("VARIABLE_TYPE")] ),
+      e = Blockly.Arduino.valueToCode(a, "VALUE", Blockly.Arduino.ORDER_ATOMIC) || "NULL";
+   
+  if("TRUE" === a.getFieldValue("ADDITIONAL")){
+    if( "const" === a.getFieldValue("ADDITIONAL_TYPE") ){
+      a = "const ";
+      Blockly.Arduino.addVariable(b, a + d + " " + c + " = " + e + ";", !0);
+    }else if( "pointer" === a.getFieldValue("ADDITIONAL_TYPE") ){
+      a = " * ";
+      Blockly.Arduino.addVariable(b, d + a + c + " = " + e + ";", !0);
+    }
+  }else{
+    a = "";
+    Blockly.Arduino.addVariable(b, a + d + " " + c + " = " + e + ";", !0);
+  }
   return "";
 };
+Blockly.Arduino.variables_init_locally = function (a) {
+  var b = a.getFieldValue("VAR"),
+      c = Blockly.Arduino.variableDB_.getName(b, Blockly.Variables.NAME_TYPE),
+      // d = Blockly.Arduino.getArduinoType_(a.getVarType()),   // <-- This is an auto type function.
+      d = Blockly.Arduino.getArduinoType_( Blockly.Types[a.getFieldValue("VARIABLE_TYPE")] ),
+      e = Blockly.Arduino.valueToCode(a, "VALUE", Blockly.Arduino.ORDER_ATOMIC) || "NULL";
+   
+  if("TRUE" === a.getFieldValue("ADDITIONAL")){
+    if( "const" === a.getFieldValue("ADDITIONAL_TYPE") ){
+      a = "const ";
+      return a + d + " " + c + " = " + e + ";";
+    }else if( "pointer" === a.getFieldValue("ADDITIONAL_TYPE") ){
+      a = " * ";
+      return d + a + c + " = " + e + ";";
+    }
+  }else{
+    a = "";
+    return b, a + d + " " + c + " = " + e + ";";
+  }
+};
 Blockly.Arduino.variables_declare_globally = function (a) {
+  console.log("(variables_declare_globally) a: ", a);
   var b = a.getFieldValue("VAR"),
     c = Blockly.Arduino.variableDB_.getName(b, Blockly.Variables.NAME_TYPE),
     d = Blockly.Arduino.getArduinoType_(a.getVarType());

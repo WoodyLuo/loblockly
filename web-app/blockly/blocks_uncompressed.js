@@ -2751,10 +2751,10 @@ Blockly.Blocks.text_prompt = {
 // Variables
 Blockly.Blocks.variables = {};
 Blockly.Blocks.variables.HUE = 330;
-Blockly.Blocks.variables_init = {
+Blockly.Blocks.variables_init_globally = {
   init: function () {
     this.jsonInit({
-      message0: Blockly.Msg.VARIABLES_INIT,
+      message0: Blockly.Msg.VARIABLES_INIT_GLOBALLY,
       args0: [
         {
           type: "field_variable",
@@ -2762,10 +2762,69 @@ Blockly.Blocks.variables_init = {
           variable: Blockly.Msg.VARIABLES_DEFAULT_NAME,
         },
         { type: "input_value", name: "VALUE" },
-        { type: "field_checkbox", name: "CONST", checked: !1 },
+        {
+          type: "field_dropdown",
+          name: "VARIABLE_TYPE",
+          options: Blockly.Types.getValidTypeArray(),
+        },
+        { type: "field_checkbox", name: "ADDITIONAL", checked: !1 },
+        {
+          "type": "field_dropdown",
+          "name": "ADDITIONAL_TYPE",
+          "options": [
+            [
+              "const", "const"
+            ],
+            [
+              "pointer", "pointer"
+            ],
+          ]
+        },
       ],
       colour: Blockly.Blocks.variables.HUE,
-      tooltip: Blockly.Msg.VARIABLES_INIT_TOOLTIP,
+      tooltip: Blockly.Msg.VARIABLES_INIT_GLOBOLLY_TOOLTIP,
+      helpUrl: Blockly.Msg.VARIABLES_SET_HELPURL,
+    });
+  },
+  getVarType: function (a) {
+    return Blockly.Types.getChildBlockType(this);
+  },
+};
+Blockly.Blocks.variables_init_locally = {
+  init: function () {
+    this.jsonInit({
+      message0: Blockly.Msg.VARIABLES_INIT_GLOBALLY,
+      args0: [
+        {
+          type: "field_variable",
+          name: "VAR",
+          variable: Blockly.Msg.VARIABLES_DEFAULT_NAME,
+        },
+        { type: "input_value", name: "VALUE" },
+        {
+          type: "field_dropdown",
+          name: "VARIABLE_TYPE",
+          options: Blockly.Types.getValidTypeArray(),
+        },
+        { type: "field_checkbox", name: "ADDITIONAL", checked: !1 },
+        {
+          "type": "field_dropdown",
+          "name": "ADDITIONAL_TYPE",
+          "options": [
+            [
+              "const", "const"
+            ],
+            [
+              "pointer", "pointer"
+            ],
+          ]
+        },
+      ],
+      previousStatement: null,
+      nextStatement: null,
+      inputsInline: !0,
+      colour: Blockly.Blocks.variables.HUE,
+      tooltip: Blockly.Msg.VARIABLES_INIT_LOCALLY_TOOLTIP,
       helpUrl: Blockly.Msg.VARIABLES_SET_HELPURL,
     });
   },

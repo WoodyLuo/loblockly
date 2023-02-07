@@ -149,6 +149,14 @@ Blockly.Arduino.reservePin = function (a, b, c, d) {
 Blockly.Arduino.scrubNakedValue = function (a) {
   return a + ";\n";
 };
+Blockly.Arduino.singlequote_ = function (a) {
+  a = a
+    .replace(/\\/g, "\\\\")
+    .replace(/\n/g, "\\\n")
+    .replace(/\$/g, "\\$")
+    .replace(/'/g, "\\'");
+  return "'" + a + "'";
+};
 Blockly.Arduino.quote_ = function (a) {
   a = a
     .replace(/\\/g, "\\\\")
@@ -1623,6 +1631,12 @@ Blockly.Arduino.stepper_step = function (a) {
   return b + ".step(" + a + ");\n";
 };
 Blockly.Arduino.text = {};
+Blockly.Arduino["char"] = function (a) {
+  return [
+    Blockly.Arduino.singlequote_(a.getFieldValue("CHAR")),
+    Blockly.Arduino.ORDER_ATOMIC,
+  ];
+};
 Blockly.Arduino.text = function (a) {
   return [
     Blockly.Arduino.quote_(a.getFieldValue("TEXT")),
@@ -1853,14 +1867,14 @@ Blockly.Arduino.variables_init_locally = function (a) {
   if("TRUE" === a.getFieldValue("ADDITIONAL")){
     if( "const" === a.getFieldValue("ADDITIONAL_TYPE") ){
       a = "const ";
-      return a + d + " " + c + " = " + e + ";";
+      return a + d + " " + c + " = " + e + ";\n";
     }else if( "pointer" === a.getFieldValue("ADDITIONAL_TYPE") ){
       a = " * ";
-      return d + a + c + " = " + e + ";";
+      return d + a + c + " = " + e + ";\n";
     }
   }else{
     a = "";
-    return b, a + d + " " + c + " = " + e + ";";
+    return b, a + d + " " + c + " = " + e + ";\n";
   }
 };
 Blockly.Arduino.variables_declare_globally = function (a) {
@@ -1941,6 +1955,39 @@ Blockly.Arduino.variables_set = function (a) {
     ";\n"
   );
 };
+Blockly.Arduino.variables_set_pointer = function (a) {
+  var b =
+    Blockly.Arduino.valueToCode(a, "VALUE", Blockly.Arduino.ORDER_ASSIGNMENT) ||
+    "0";
+  var c = "TRUE" === a.getFieldValue("POINTER") ? "* " : "";
+  return (
+    c + 
+    Blockly.Arduino.variableDB_.getName(
+      a.getFieldValue("VAR"),
+      Blockly.Variables.NAME_TYPE
+    ) +
+    " = " +
+    b +
+    ";\n"
+  );
+};
+/*
+// This is the original 'variables_set' function.
+Blockly.Arduino.variables_set = function (a) {
+  var b =
+    Blockly.Arduino.valueToCode(a, "VALUE", Blockly.Arduino.ORDER_ASSIGNMENT) ||
+    "0";
+  return (
+    Blockly.Arduino.variableDB_.getName(
+      a.getFieldValue("VAR"),
+      Blockly.Variables.NAME_TYPE
+    ) +
+    " = " +
+    b +
+    ";\n"
+  );
+};
+*/
 Blockly.Arduino.variables_set_type = function (a) {
   var b =
     Blockly.Arduino.valueToCode(
@@ -1958,4 +2005,26 @@ Blockly.Arduino.variables_set_type = function (a) {
       ")",
     Blockly.Arduino.ORDER_ATOMIC,
   ];
+};
+Blockly.Arduino.variables_pointer = function (a) {
+  var b = Blockly.Arduino.ORDER_NONE;
+  var c = Blockly.Arduino.valueToCode(a, "POINTER", b);
+  return ["*" + (c || "item")];
+};
+Blockly.Arduino.variables_address = function (a) {
+  var b = Blockly.Arduino.ORDER_NONE;
+  var c = Blockly.Arduino.valueToCode(a, "ADDRESS", b);
+  return ["&" + (c || "item")];
+};
+Blockly.Arduino.io_highlow = function (a) {
+  return [a.getFieldValue("STATE"), Blockly.Arduino.ORDER_ATOMIC];
+};
+Blockly.Arduino.io_allpins = function (a) {
+  return [a.getFieldValue("PIN"), Blockly.Arduino.ORDER_ATOMIC];
+};
+Blockly.Arduino.io_analogpins = function (a) {
+  return [a.getFieldValue("PIN"), Blockly.Arduino.ORDER_ATOMIC];
+};
+Blockly.Arduino.io_pwmpins = function (a) {
+  return [a.getFieldValue("PIN"), Blockly.Arduino.ORDER_ATOMIC];
 };

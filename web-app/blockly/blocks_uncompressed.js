@@ -2274,6 +2274,37 @@ Blockly.Blocks.procedures_ifreturn = {
 };
 Blockly.Blocks.texts = {};
 Blockly.Blocks.texts.HUE = 160;
+Blockly.Blocks["char"] = {
+  init: function () {
+    this.setHelpUrl(Blockly.Msg.TEXT_CHAR_HELPURL);
+    this.setColour(Blockly.Blocks.texts.HUE);
+    this.appendDummyInput()
+      .appendField(this.newQuote_(!0))
+      .appendField(new Blockly.FieldTextInput(""), "CHAR")
+      .appendField(this.newQuote_(!1));
+    this.setOutput(!0, Blockly.Types.CHARACTER.output);
+    var a = this;
+    this.setTooltip(function () {
+      var b = a.getParent();
+      return (
+        (b && b.getInputsInline() && b.tooltip) || Blockly.Msg.TEXT_CHAR_TOOLTIP
+      );
+    });
+  },
+  newQuote_: function (a) {
+    return new Blockly.FieldImage(
+      a == this.RTL
+        ? "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAKCAYAAACXDi8zAAAACXBIWXMAAC4jAAAuIwF4pT92AAAAZUlEQVR42mNgAIL////7AHEJEIcAMSMDVBDEQQZTYRJt/zGBAEgiE4uEBkiCEYgTgHg2ED+GSmgyIAOgwG2oBCeyoCQQ/wXibmRBQajK70DMBhMsA+JfQPwSiLmQVXcBcTkDGgAAYj6aljihuoYAAAAASUVORK5CYII="
+        : "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAKCAYAAACXDi8zAAAACXBIWXMAAC4jAAAuIwF4pT92AAAAXklEQVR42mNgQAL///8XA+KtQOyOLKj5HwLeA7EZTFAFKniOAc2IT0D8EYiZkAW9oKrD0FUXQSVWAvE0ILaESRT8xwQKIAk/LBLOIAlGLBKCMON4gTgDiEuAWBEkBgDRwppuX2Kh2gAAAABJRU5ErkJggg==",
+      6,
+      12,
+      '"'
+    );
+  },
+  getBlockType: function () {
+    return Blockly.Types.CHARACTER;
+  },
+};
 Blockly.Blocks.text = {
   init: function () {
     this.setHelpUrl(Blockly.Msg.TEXT_TEXT_HELPURL);
@@ -2793,7 +2824,7 @@ Blockly.Blocks.variables_init_globally = {
 Blockly.Blocks.variables_init_locally = {
   init: function () {
     this.jsonInit({
-      message0: Blockly.Msg.VARIABLES_INIT_GLOBALLY,
+      message0: Blockly.Msg.VARIABLES_INIT_LOCALLY,
       args0: [
         {
           type: "field_variable",
@@ -2970,7 +3001,155 @@ Blockly.Blocks.variables_set = {
   getVarType: function (a) {
     return Blockly.Types.getChildBlockType(this);
   },
+};
+Blockly.Blocks.variables_set_pointer = {
+  init: function () {
+    this.jsonInit({
+      message0: Blockly.Msg.VARIABLES_SET_POINTER,
+      args0: [
+        { type: "field_checkbox", name: "POINTER", checked: true },
+        {
+          type: "field_variable",
+          name: "VAR",
+          variable: Blockly.Msg.VARIABLES_DEFAULT_NAME,
+        },
+        { type: "input_value", name: "VALUE" },
+      ],
+      previousStatement: null,
+      nextStatement: null,
+      colour: Blockly.Blocks.variables.HUE,
+      tooltip: Blockly.Msg.VARIABLES_SET_TOOLTIP,
+      helpUrl: Blockly.Msg.VARIABLES_SET_HELPURL,
+    });
+    this.contextMenuMsg_ = Blockly.Msg.VARIABLES_SET_CREATE_GET;
+  },
+  contextMenuType_: "variables_get",
+  customContextMenu: Blockly.Blocks.variables_get.customContextMenu,
+  getVarType: function (a) {
+    return Blockly.Types.getChildBlockType(this);
+  },
 }; 
+Blockly.Blocks.variables_pointer = {
+  init: function (){
+    this.jsonInit({
+      message0: Blockly.Msg.VARIABLES_POINTER,
+      args0: [
+        { type: "input_value", name:"POINTER" },
+      ],
+      output: null,
+      colour: Blockly.Blocks.logic.HUE,
+      tooltip: Blockly.Msg.VARIABLES_POINTER_TOOLTIP,
+    });
+  },
+  getBlockType: function () {
+    return Blockly.Types.POINTER;
+  },
+}
+Blockly.Blocks.variables_address = {
+  init: function (){
+    this.jsonInit({
+      message0: Blockly.Msg.VARIABLES_ADDRESS,
+      args0: [
+        { type: "input_value", name:"ADDRESS" },
+      ],
+      output: null,
+      colour: Blockly.Blocks.logic.HUE,
+      tooltip: Blockly.Msg.VARIABLES_ADDRESS_TOOLTIP,
+    });
+  },
+  getBlockType: function () {
+    return Blockly.Types.ADDRESS;
+  },
+}
+
+// Arduino pin
+Blockly.Blocks.pin = {};
+Blockly.Blocks.pin.HUE = 250;
+Blockly.Blocks.io_highlow = {
+  init: function () {
+    this.setHelpUrl("https://arduino.cc/en/Reference/Constants");
+    this.setColour(Blockly.Blocks.pin.HUE);
+    this.appendDummyInput().appendField(
+      new Blockly.FieldDropdown([
+        [Blockly.Msg.ARD_HIGH, "HIGH"],
+        [Blockly.Msg.ARD_LOW, "LOW"],
+      ]),
+      "STATE"
+    );
+    this.setOutput(!0, [
+      Blockly.Types.NUMBER.output,
+      Blockly.Types.BOOLEAN.output,
+    ]);
+    this.setTooltip(Blockly.Msg.ARD_HIGHLOW_TIP);
+  },
+  getBlockType: function () {
+    return [Blockly.Types.NUMBER, Blockly.Types.BOOLEAN];
+  },
+};
+Blockly.Blocks.io_allpins = {
+  init: function () {
+    this.setHelpUrl("https://www.arduino.cc/en/reference/board");
+    this.setColour(Blockly.Blocks.pin.HUE);
+    this.appendDummyInput()
+      .appendField(Blockly.Msg.ARD_PIN)
+      .appendField(
+        new Blockly.FieldDropdown(Blockly.Arduino.Boards.selected.digitalPins),
+        "PIN"
+      );
+    this.setOutput(!0, Blockly.Types.NUMBER.output);
+    this.setTooltip("");
+  },
+  getBlockType: function () {
+    return Blockly.Types.NUMBER;
+  },
+  updateFields: function () {
+    Blockly.Arduino.Boards.refreshBlockFieldDropdown(
+      this,
+      "PIN",
+      "digitalPins"
+    );
+  },
+};
+Blockly.Blocks.io_analogpins = {
+  init: function () {
+    this.setHelpUrl("https://www.arduino.cc/en/reference/board");
+    this.setColour(Blockly.Blocks.pin.HUE);
+    this.appendDummyInput()
+      .appendField(Blockly.Msg.ARD_ANALOG_PIN)
+      .appendField(
+        new Blockly.FieldDropdown(Blockly.Arduino.Boards.selected.analogPins),
+        "PIN"
+      );
+    this.setOutput(!0, Blockly.Types.NUMBER.output);
+    this.setTooltip("");
+  },
+  getBlockType: function () {
+    return Blockly.Types.NUMBER;
+  },
+  updateFields: function () {
+    Blockly.Arduino.Boards.refreshBlockFieldDropdown(this, "PIN", "analogPins");
+  },
+};
+Blockly.Blocks.io_pwmpins = {
+  init: function () {
+    this.setHelpUrl("https://www.arduino.cc/en/reference/board");
+    this.setColour(Blockly.Blocks.pin.HUE);
+    this.appendDummyInput()
+      .appendField(Blockly.Msg.ARD_PWM_PIN)
+      .appendField(
+        new Blockly.FieldDropdown(Blockly.Arduino.Boards.selected.pwmPins),
+        "PIN"
+      );
+    this.setOutput(!0, Blockly.Types.NUMBER.output);
+    this.setTooltip("");
+  },
+  getBlockType: function () {
+    return Blockly.Types.NUMBER;
+  },
+  updateFields: function () {
+    Blockly.Arduino.Boards.refreshBlockFieldDropdown(this, "PIN", "pwmPins");
+  },
+};
 
 /*
  Licensed under the Apache License, Version 2.0 (the "License"):

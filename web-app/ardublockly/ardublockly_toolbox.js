@@ -108,6 +108,7 @@ Ardublockly.TOOLBOX_XML =
 '  </category>' +
 '  <sep></sep>' +
 '  <category id="catText" name="Text">' +
+'    <block type="char"></block>' +
 '    <block type="text"></block>' +
 '    <block type="text_join"></block>' +
 '    <block type="text_append">' +
@@ -128,12 +129,19 @@ Ardublockly.TOOLBOX_XML =
 '    <block type="variables_declare_locally"></block>' +
 '    <block type="variables_get"></block>' +
 '    <block type="variables_set"></block>' +
+'    <block type="variables_set_pointer"></block>' +
 '    <block type="variables_set">' +
 '      <value name="VALUE">' +
 '        <block type="variables_set_type"></block>' +
 '      </value>' +
 '    </block>' +
 '    <block type="variables_set_type"></block>' +
+'    <block type="variables_pointer"></block>' +
+'    <block type="variables_address"></block>' +
+'    <block type="io_highlow"></block>' + 
+'    <block type="io_allpins"></block>' + 
+'    <block type="io_analogpins"></block>' + 
+'    <block type="io_pwmpins"></block>' + 
 '  </category>' +
 '  <sep></sep>' +
 '  <category id="catFunctions" name="Functions" custom="PROCEDURE"></category>' +

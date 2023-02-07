@@ -22910,6 +22910,20 @@ Blockly.Types.CHILD_BLOCK_MISSING = new Blockly.Type({
   typeMsgName: "ARD_TYPE_CHILDBLOCKMISSING",
   compatibleTypes: [],
 });
+
+// Arduino Type -- Pointer
+Blockly.Types.POINTRT = new Blockly.Type({
+  typeId: "Pointer",
+  typeMsgName: "ARD_TYPE_POINTER",
+  compatibleTypes: [],
+});
+// Arduino Type -- Address
+Blockly.Types.ADDRESS = new Blockly.Type({
+  typeId: "Address",
+  typeMsgName: "ARD_TYPE_ADDRESS",
+  compatibleTypes: [],
+});
+
 Blockly.Types.NUMBER.addCompatibleTypes([
   Blockly.Types.BOOLEAN,
   Blockly.Types.SHORT_NUMBER,
@@ -22946,6 +22960,8 @@ Blockly.Types.getValidTypeArray = function () {
       "CHILD_BLOCK_MISSING" === b ||
       "NULL" === b ||
       "ARRAY" === b ||
+      "POINTRT" === b || 
+      "ADDRESS" === b || 
       "function" === typeof Blockly.Types[b] ||
       Blockly.Types[b] instanceof RegExp ||
       a.push([Blockly.Types[b].typeName, b]);
